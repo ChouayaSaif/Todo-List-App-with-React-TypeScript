@@ -1,10 +1,12 @@
 import React, { useState } from "react";
 import { Todo } from "./types";
+import TodoItem from "./TodoItem";
 
 const App: React.FC = () => {
   const [todos, setTodos] = useState<Todo[]>([]);
   const [text, setText] = useState<string>("");
 
+  // Add a new todo
   const addTodo = () => {
     if (text.trim() === "") return;
     const newTodo: Todo = { id: Date.now(), text, completed: false };
@@ -12,20 +14,16 @@ const App: React.FC = () => {
     setText("");
   };
 
+  // Toggle completed status
   const toggleTodo = (id: number) => {
     setTodos(
-      todos.map(todo (
-          <TodoItem
-              key={todo.id}
-              todo={todo}
-              toggleTodo={toggleTodo}
-              deleteTodo={deleteTodo}
-          />
-        )
+      todos.map(todo =>
+        todo.id === id ? { ...todo, completed: !todo.completed } : todo
       )
     );
   };
 
+  // Delete a todo
   const deleteTodo = (id: number) => {
     setTodos(todos.filter(todo => todo.id !== id));
   };
@@ -39,22 +37,18 @@ const App: React.FC = () => {
         onChange={e => setText(e.target.value)}
         placeholder="Enter a task"
       />
-      <button onClick={addTodo}>Add</button>
+      <button onClick={addTodo} style={{ marginLeft: "10px" }}>
+        Add
+      </button>
 
       <ul>
         {todos.map(todo => (
-          <li key={todo.id}>
-            <span
-              onClick={() => toggleTodo(todo.id)}
-              style={{
-                textDecoration: todo.completed ? "line-through" : "none",
-                cursor: "pointer"
-              }}
-            >
-              {todo.text}
-            </span>
-            <button onClick={() => deleteTodo(todo.id)}>Delete</button>
-          </li>
+          <TodoItem
+            key={todo.id}
+            todo={todo}
+            toggleTodo={toggleTodo}
+            deleteTodo={deleteTodo}
+          />
         ))}
       </ul>
     </div>

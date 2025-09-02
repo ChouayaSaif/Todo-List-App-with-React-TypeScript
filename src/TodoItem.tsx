@@ -14,12 +14,14 @@ const TodoItem: React.FC<Props> = ({ todo, toggleTodo, deleteTodo }) => {
         onClick={() => toggleTodo(todo.id)}
         style={{
           textDecoration: todo.completed ? "line-through" : "none",
-          cursor: "pointer"
+          cursor: "pointer",
         }}
       >
         {todo.text}
       </span>
-      <button onClick={() => deleteTodo(todo.id)}>Delete</button>
+      <button onClick={() => deleteTodo(todo.id)} style={{ marginLeft: "10px" }}>
+        Delete
+      </button>
     </li>
   );
 };
