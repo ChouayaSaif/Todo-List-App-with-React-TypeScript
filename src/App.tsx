@@ -14,8 +14,14 @@ const App: React.FC = () => {
 
   const toggleTodo = (id: number) => {
     setTodos(
-      todos.map(todo =>
-        todo.id === id ? { ...todo, completed: !todo.completed } : todo
+      todos.map(todo (
+          <TodoItem
+              key={todo.id}
+              todo={todo}
+              toggleTodo={toggleTodo}
+              deleteTodo={deleteTodo}
+          />
+        )
       )
     );
   };
